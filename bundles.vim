@@ -23,6 +23,7 @@ Bundle 'gmarik/vundle'
 
 "" Bundle list
 Bundle 'kien/ctrlp.vim'
+Bundle 'tpope/vim-endwise'
 
 filetype plugin indent on     " required!
 
