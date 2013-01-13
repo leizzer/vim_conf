@@ -1,4 +1,8 @@
 set nocompatible                " choose no compatibility with legacy vi
+
+"" Vundle
+
+"" Basic Settings
 syntax enable
 set encoding=utf-8
 set showcmd                     " display incomplete commands
@@ -22,3 +26,15 @@ set list
 
 "" Color
 color darkblue
+
+
+"""" Config
+" use comma as <Leader> key instead of backslash
+let mapleader=","
+
+" double percentage sign in command mode is expanded
+" to directory of current file - http://vimcasts.org/e/14
+cnoremap %% <C-R>=expand('%:h').'/'<cr>
+
+map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
+map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
