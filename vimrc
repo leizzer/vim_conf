@@ -1,6 +1,7 @@
 set nocompatible                " choose no compatibility with legacy vi
 
 "" Vundle
+silent! runtime bundles.vim
 
 "" Basic Settings
 syntax enable
@@ -36,5 +37,4 @@ let mapleader=","
 " to directory of current file - http://vimcasts.org/e/14
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
-map <leader>f :CtrlP<cr>
-map <leader>F :CtrlP %%<cr>
+map <leader>f :CtrlPMixed<cr>
