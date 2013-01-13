@@ -24,6 +24,9 @@ Bundle 'gmarik/vundle'
 "" Bundle list
 Bundle 'kien/ctrlp.vim'
 Bundle 'tpope/vim-endwise'
+Bundle 'tpope/vim-surround'
+Bundle 'matchit.zip'
+Bundle 'ecomba/vim-ruby-refactoring'
 
 filetype plugin indent on     " required!
 
