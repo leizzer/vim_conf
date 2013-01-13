@@ -8,6 +8,7 @@ syntax enable
 set encoding=utf-8
 set showcmd                     " display incomplete commands
 filetype plugin indent on       " load file type plugins + indentation
+syntax on
 
 "" Whitespace
 set nowrap                      " don't wrap lines
