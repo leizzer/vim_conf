@@ -39,3 +39,7 @@ let mapleader=","
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
 map <leader>f :CtrlPMixed<cr>
+
+"" Tags: Create or update
+map <leader>tags :! ctags -R --languages=ruby --exclude=.git<cr>
+
