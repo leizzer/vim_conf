@@ -10,4 +10,4 @@ set runtimepath+=~/.vim/bundle/vundle/
 
 call vundle#rc()
 
-Bundle 'git://git.wincent.com/command-t.git'
+Bundle 'https://github.com/kien/ctrlp.vim.git'
