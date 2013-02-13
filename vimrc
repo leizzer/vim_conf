@@ -38,7 +38,7 @@ let mapleader=","
 " to directory of current file - http://vimcasts.org/e/14
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
-map <leader>f :CtrlPMixed<cr>
+map <leader>f :CtrlP<cr>
 
 "" Tags: Create or update
 map <leader>tags :! ctags -R --languages=ruby --exclude=.git<cr>

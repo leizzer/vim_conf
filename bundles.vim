@@ -27,6 +27,7 @@ Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-surround'
 Bundle 'matchit.zip'
 Bundle 'ecomba/vim-ruby-refactoring'
+Bundle 'kchmck/vim-coffee-script'
 
 filetype plugin indent on     " required!
 
