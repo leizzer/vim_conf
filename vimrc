@@ -1,5 +1,8 @@
 set nocompatible                " choose no compatibility with legacy vi
 
+"" Place swap files in other place for zero directory pollution
+set dir=~/.vim/tmp
+
 "" Vundle
 silent! runtime bundles.vim
 
