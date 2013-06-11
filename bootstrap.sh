@@ -1,10 +1,10 @@
 #!/bin/sh
 
 # Install vim
-sudo apt-get install vim
+sudo apt-get install -y vim
 
 # Install ctag for project managment
-sudo apt-get install exuberant-ctags
+sudo apt-get install -y exuberant-ctags
 
 # Bundle install
 vim -c BundleInstall! -c q -c q -u bundles.vim
