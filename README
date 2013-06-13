@@ -1,2 +1,9 @@
-TODO:
-  -[x] Take out bundle folder
+Install:
+  
+  cd ~
+
+  git clone https://github.com/leizzer/vim_conf.git .vim
+  
+  cd ~/.vim
+  
+  ./boostrap.sh
