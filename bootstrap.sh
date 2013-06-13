@@ -10,8 +10,11 @@ sudo apt-get install -y exuberant-ctags
 vim -c BundleInstall! -c q -c q -u bundles.vim
 
 # Create ~/.vimrc link to ~/.vim/vimrc
-mv ~/.vimrc ~/.vimrc_old
+if [ -f ~/.vimrc ]
+then
+  mv ~/.vimrc ~/.vimrc_old
+fi
 ln -s ~/.vim/vimrc ~/.vimrc 
 
 # Create tmp directory for .swp files
-mkdir ~/.vimrc/tmp
+mkdir ~/.vim/tmp
