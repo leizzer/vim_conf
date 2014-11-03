@@ -9,6 +9,8 @@ silent! runtime bundles.vim
 "" Basic Settings
 syntax enable
 set encoding=utf-8
+set laststatus=2                " always show statusbar
+set noshowmode                  " hide the default mode text (e.g. --INSERT--)
 set showcmd                     " display incomplete commands
 filetype plugin indent on       " load file type plugins + indentation
 syntax on
@@ -46,3 +48,11 @@ map <leader>f :CtrlP<cr>
 "" Tags: Create or update
 map <leader>tags :! ctags -R --languages=ruby --exclude=.git<cr>
 
+"""" PowerLine
+set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
+
+" Always show statusline
+set laststatus=2
+
+" " Use 256 colours (Use this setting only if your terminal supports 256 colours)
+set t_Co=256
