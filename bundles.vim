@@ -30,6 +30,7 @@ Bundle 'ecomba/vim-ruby-refactoring'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'slim-template/vim-slim'
 Bundle 'mileszs/ack.vim'
+Bundle 'scrooloose/nerdtree'
 
 filetype plugin indent on     " required!
 
