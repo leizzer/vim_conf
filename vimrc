@@ -3,6 +3,10 @@ set nocompatible                " choose no compatibility with legacy vi
 "" Place swap files in other place for zero directory pollution
 set dir=~/.vim/tmp
 
+"" Check file change every 4 seconds ('CursorHold') and reload the buffer upon detecting change
+set autoread
+au CursorHold * checktime
+
 "" Vundle
 silent! runtime bundles.vim
 
