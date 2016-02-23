@@ -22,6 +22,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 "" Bundle list
+Bundle 'sheerun/vim-polyglot'
 Bundle 'kien/ctrlp.vim'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-surround'
@@ -29,8 +30,8 @@ Bundle 'matchit.zip'
 Bundle 'ecomba/vim-ruby-refactoring'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'slim-template/vim-slim'
-Bundle 'mileszs/ack.vim'
 Bundle 'scrooloose/nerdtree'
+Bundle 'mileszs/ack.vim'
 
 filetype plugin indent on     " required!
 

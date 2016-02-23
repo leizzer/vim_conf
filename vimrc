@@ -7,6 +7,9 @@ set dir=~/.vim/tmp
 set autoread
 au CursorHold * checktime
 
+"" Git commit spell check and wrapping
+autocmd Filetype gitcommit setlocal spell textwidth=72
+
 "" Vundle
 silent! runtime bundles.vim
 
@@ -37,7 +40,6 @@ set list
 
 "" Color
 color darkblue
-
 
 """" Config
 " use comma as <Leader> key instead of backslash
