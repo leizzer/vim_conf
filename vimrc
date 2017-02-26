@@ -1,5 +1,12 @@
 set nocompatible                " choose no compatibility with legacy vi
 
+"" Vim NeoVim direcotry configuration
+if has('nvim')
+  let s:editor_root=expand("~/.nvim")
+else
+  let s:editor_root=expand("~/.vim")
+endif
+
 "" Place swap files in other place for zero directory pollution
 set dir=~/.vim/tmp
 

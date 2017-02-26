@@ -24,6 +24,7 @@ Bundle 'gmarik/vundle'
 "" Bundle list
 Bundle 'sheerun/vim-polyglot'
 Bundle 'kien/ctrlp.vim'
+Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-surround'
 Bundle 'matchit.zip'
@@ -32,6 +33,7 @@ Bundle 'kchmck/vim-coffee-script'
 Bundle 'slim-template/vim-slim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'mileszs/ack.vim'
+Bundle 'vim-ruby/vim-ruby'
 
 filetype plugin indent on     " required!
 
