@@ -28,6 +28,12 @@ Plug 'ecomba/vim-ruby-refactoring'
 " === Rust ===
 "" Plug 'rust-lang/rust.vim' " not sure if needed with polyglot
 
+" === Go ===
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+if exists('g:loaded_polyglot')
+    let g:polyglot_disabled = ['go']
+endif
+
 " === Icons ===
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
