@@ -1,7 +1,7 @@
 " ===========================================================================
 " ===                          PLUGINS                                    ===
 " ===========================================================================
-
+language en_US.UTF8
 
 call plug#begin('~/.local/share/nvim/plugged')
 
@@ -25,9 +25,6 @@ Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-endwise'
 Plug 'ecomba/vim-ruby-refactoring'
 
-" === Rust ===
-"" Plug 'rust-lang/rust.vim' " not sure if needed with polyglot
-
 " === Go ===
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 if exists('g:loaded_polyglot')
@@ -49,7 +46,7 @@ Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 Plug 'shougo/echodoc.vim'
 
 " === Denite ===
-Plug 'shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' } " deprecated, need to use `ddu.vim`
 if !has('nvim')
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
@@ -173,6 +170,9 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
 
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
@@ -365,12 +365,25 @@ try
   endif
 
   " unicode symbols
-  let g:airline_left_sep = '❯'
-  let g:airline_right_sep = '❮'
+  let g:airline_left_sep = '»'
+  let g:airline_right_sep = '«'
+  let g:airline_symbols.linenr = '␊'
+  let g:airline_symbols.linenr = '␤'
+  let g:airline_symbols.linenr = '¶'
+  let g:airline_symbols.branch = '⎇'
+  let g:airline_symbols.paste = 'ρ'
+  let g:airline_symbols.paste = 'Þ'
+  let g:airline_symbols.paste = '∥'
+  let g:airline_symbols.whitespace = 'Ξ'
 
-  " Don't show git changes to current file in airline
-  let g:airline#extensions#hunks#enabled=0
-
+  " airline symbols
+  let g:airline_left_sep = "\uE0B4"
+  let g:airline_left_alt_sep = ''
+  let g:airline_right_sep = "\uE0B6"
+  let g:airline_right_alt_sep = ''
+  let g:airline_symbols.branch = ''
+  let g:airline_symbols.readonly = ''
+  let g:airline_symbols.linenr = ''
 catch
   echo 'Airline not installed. It should work after running :PlugInstall'
 endtry

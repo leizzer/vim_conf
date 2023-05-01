@@ -3,5 +3,18 @@
   "eslint.validate": [ "javascript", "javascriptreact", "html" ],
 
 	"tsserver.enableJavascript" : true,
-  "tsserver.npm": "/Users/recris/.config/nvm/14.4.0/bin/npm"
+  "tsserver.npm": "/Users/recris/.config/nvm/14.4.0/bin/npm",
+
+	"languageserver": {
+		"terraform": {
+			"command": "terraform-ls",
+			"args": ["serve"],
+			"filetypes": [
+				"terraform",
+				"tf"
+			],
+			"initializationOptions": {},
+			"settings": {}
+		}
+	}
 }
