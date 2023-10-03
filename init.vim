@@ -24,6 +24,7 @@ Plug 'sheerun/vim-polyglot'
 " === Ruby ===
 Plug 'tpope/vim-endwise'
 Plug 'ecomba/vim-ruby-refactoring'
+Plug 'tpope/vim-rails'
 
 " === Go ===
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
@@ -33,6 +34,7 @@ endif
 
 " === Icons ===
 Plug 'ryanoasis/vim-devicons'
+Plug 'nvim-tree/nvim-web-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 " === Misc ===
@@ -45,13 +47,15 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 Plug 'shougo/echodoc.vim'
 
-" === Denite ===
-Plug 'shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' } " deprecated, need to use `ddu.vim`
-if !has('nvim')
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-" <<< Denite
+" === UI
+Plug 'prabirshrestha/vim-lsp'
+
+" === UI
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
+"" NOTE: Install LSP
+
 
 call plug#end()
 
@@ -102,6 +106,16 @@ set incsearch                   " incremental searching
 set ignorecase                  " searches are case insensitive...
 set smartcase                   " ... unless they contain at least one capital letter
 
+" ===========================================================================
+" ===                          VIM LSP                                    ===
+" ===========================================================================
+if executable('standardrb')
+  au User lsp_setup call lsp#register_server({
+        \ 'name': 'standardrb',
+        \ 'cmd': ['standardrb', '--lsp'],
+        \ 'allowlist': ['ruby'],
+        \ })
+endif
 
 " ===========================================================================
 " ===                          VIM UI                                     ===
@@ -179,249 +193,6 @@ inoremap <silent><expr> <TAB>
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
 
-try
-  autocmd FileType denite call s:denite_my_settings()
-function! s:denite_my_settings() abort
-    nnoremap <silent><buffer><expr> <CR>
-                \ denite#do_map('do_action')
-    nnoremap <silent><buffer><expr> d
-                \ denite#do_map('do_action', 'delete')
-    nnoremap <silent><buffer><expr> <c-t>
-                \ denite#do_map('do_action', 'tabopen')
-    nnoremap <silent><buffer><expr> <c-v>
-                \ denite#do_map('do_action', 'vsplit')
-    nnoremap <silent><buffer><expr> <c-x>
-                \ denite#do_map('do_action', 'split')
-    nnoremap <silent><buffer><expr> p
-                \ denite#do_map('do_action', 'preview')
-    nnoremap <silent><buffer><expr> q
-                \ denite#do_map('quit')
-    nnoremap <silent><buffer><expr> i
-                \ denite#do_map('open_filter_buffer')
-    nnoremap <silent><buffer><expr> V
-                \ denite#do_map('toggle_select').'j'
-endfunction
-
-
-autocmd FileType denite-filter call s:denite_filter_my_settings()
-function! s:denite_filter_my_settings() abort
-    imap <silent><buffer> <tab> <Plug>(denite_filter_quit)
-    inoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
-    inoremap <silent><buffer><expr> <c-t>
-                \ denite#do_map('do_action', 'tabopen')
-    inoremap <silent><buffer><expr> <c-v>
-                \ denite#do_map('do_action', 'vsplit')
-    inoremap <silent><buffer><expr> <c-x>
-                \ denite#do_map('do_action', 'split')
-    inoremap <silent><buffer><expr> <esc>
-                \ denite#do_map('quit')
-    inoremap <silent><buffer> <C-j>
-                \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR><C-w>pA
-    inoremap <silent><buffer> <C-k>
-                \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR><C-w>pA
-endfunction
-
-
-" Change matchers.
-call denite#custom#source(
-\ 'file_mru', 'matchers', ['matcher/fuzzy', 'matcher/project_files'])
-
-call denite#custom#source('tag', 'matchers', ['matcher/substring'])
-
-call denite#custom#source('file/old', 'converters',
-      \ ['converter/relative_word'])
-" Change sorters.
-call denite#custom#source(
-\ 'file/rec', 'sorters', ['sorter/sublime'])
-
-
-" Ag command on grep source
-if executable('ag')
-    call denite#custom#var('grep', 'command', ['ag'])
-    call denite#custom#var('grep', 'default_opts',
-                \ ['-i', '--vimgrep'])
-    call denite#custom#var('grep', 'recursive_opts', [])
-    call denite#custom#var('grep', 'pattern_opt', [])
-    call denite#custom#var('grep', 'separator', ['--'])
-    call denite#custom#var('grep', 'final_opts', [])
-    call denite#custom#var('file/rec', 'command',
-                \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-endif
-
-if executable('ack')
-    " Ack command on grep source
-    call denite#custom#var('grep', 'command', ['ack'])
-    call denite#custom#var('grep', 'default_opts',
-                \ ['--ackrc', $HOME.'/.ackrc', '-H', '-i',
-                \  '--nopager', '--nocolor', '--nogroup', '--column'])
-    call denite#custom#var('grep', 'recursive_opts', [])
-    call denite#custom#var('grep', 'pattern_opt', ['--match'])
-    call denite#custom#var('grep', 'separator', ['--'])
-    call denite#custom#var('grep', 'final_opts', [])
-endif
-
-if executable('rg')
-    " Ripgrep command on grep source
-    call denite#custom#var('grep', 'command', ['rg'])
-    call denite#custom#var('grep', 'default_opts',
-                \ ['-i', '--vimgrep', '--no-heading'])
-    call denite#custom#var('grep', 'recursive_opts', [])
-    call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
-    call denite#custom#var('grep', 'separator', ['--'])
-    call denite#custom#var('grep', 'final_opts', [])
-    " For ripgrep
-    " Note: It is slower than ag
-    call denite#custom#var('file/rec', 'command',
-                \ ['rg', '--files', '--glob', '!.git'])
-endif
-
-
-if executable('pt')
-    " Pt command on grep source
-    call denite#custom#var('grep', 'command', ['pt'])
-    call denite#custom#var('grep', 'default_opts',
-                \ ['-i', '--nogroup', '--nocolor', '--smart-case'])
-    call denite#custom#var('grep', 'recursive_opts', [])
-    call denite#custom#var('grep', 'pattern_opt', [])
-    call denite#custom#var('grep', 'separator', ['--'])
-    call denite#custom#var('grep', 'final_opts', [])
-    " For Pt(the platinum searcher)
-    " NOTE: It also supports windows.
-    call denite#custom#var('file/rec', 'command',
-                \ ['pt', '--follow', '--nocolor', '--nogroup',
-                \  (has('win32') ? '-g:' : '-g='), ''])
-endif
-
-" Define alias
-call denite#custom#alias('source', 'file/rec/git', 'file/rec')
-call denite#custom#var('file/rec/git', 'command',
-      \ ['git', 'ls-files', '-co', '--exclude-standard'])
-
-call denite#custom#alias('source', 'file/rec/py', 'file/rec')
-call denite#custom#var('file/rec/py', 'command',['scantree.py'])
-
-" Change ignore_globs
-call denite#custom#filter('matcher/ignore_globs', 'ignore_globs',
-      \ [ '.git/', '.ropeproject/', '__pycache__/',
-      \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
-
-let s:denite_options = {
-      \ 'prompt' : '>',
-      \ 'split': 'floating',
-      \ 'start_filter': 1,
-      \ 'auto_resize': 1,
-      \ 'source_names': 'short',
-      \ 'direction': 'botright',
-      \ 'highlight_filter_background': 'CursorLine',
-      \ 'highlight_matched_char': 'Type',
-      \ }
-
-call denite#custom#option('default', s:denite_options)
-
-catch
-  echo 'Denite not installed. It should work after running :PlugInstall'
-endtry
-
-try
-  " === Vim airline ==== "
-  " Enable extensions
-  let g:airline_extensions = ['branch', 'hunks', 'coc']
-
-  " Update section z to just have line number
-  let g:airline_section_z = airline#section#create(['linenr'])
-
-  " Do not draw separators for empty sections (only for the active window) >
-  let g:airline_skip_empty_sections = 1
-
-  " Smartly uniquify buffers names with similar filename, suppressing common parts of paths.
-  let g:airline#extensions#tabline#formatter = 'unique_tail'
-
-  " Custom setup that removes filetype/whitespace from default vim airline bar
-  let g:airline#extensions#default#layout = [['a', 'b', 'c'], ['x', 'z', 'warning', 'error']]
-
-  let airline#extensions#coc#stl_format_err = '%E{[%e(#%fe)]}'
-
-  let airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
-
-  " Configure error/warning section to use coc.nvim
-  let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-  let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
-
-  " Hide the Nerdtree status line to avoid clutter
-  let g:NERDTreeStatusline = ''
-
-  " Disable vim-airline in preview mode
-  let g:airline_exclude_preview = 1
-
-  " Enable powerline fonts
-  let g:airline_powerline_fonts = 1
-
-  " Enable caching of syntax highlighting groups
-  let g:airline_highlighting_cache = 1
-
-  " Define custom airline symbols
-  if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-  endif
-
-  " unicode symbols
-  let g:airline_left_sep = '»'
-  let g:airline_right_sep = '«'
-  let g:airline_symbols.linenr = '␊'
-  let g:airline_symbols.linenr = '␤'
-  let g:airline_symbols.linenr = '¶'
-  let g:airline_symbols.branch = '⎇'
-  let g:airline_symbols.paste = 'ρ'
-  let g:airline_symbols.paste = 'Þ'
-  let g:airline_symbols.paste = '∥'
-  let g:airline_symbols.whitespace = 'Ξ'
-
-  " airline symbols
-  let g:airline_left_sep = "\uE0B4"
-  let g:airline_left_alt_sep = ''
-  let g:airline_right_sep = "\uE0B6"
-  let g:airline_right_alt_sep = ''
-  let g:airline_symbols.branch = ''
-  let g:airline_symbols.readonly = ''
-  let g:airline_symbols.linenr = ''
-catch
-  echo 'Airline not installed. It should work after running :PlugInstall'
-endtry
-
-
-" ===========================================================================
-" ===                          KEY MAPS                                   ===
-" ===========================================================================
-
-
-"""" Config
-" use comma as <Leader> key instead of backslash
-let mapleader="\\"
-
-"" Terminal Inside vim terminal
-map <F2> :terminal
-map <F3> <C-\><C-n>
-
-"" Change tab with page up and down
-nmap <C-PageUp> :bp<CR>
-nmap <C-PageDown> :bn<CR>
-
-" === Denite shorcuts === "
-"   ;         - Browser currently open buffers
-"   <leader>d - Browse list of files in current directory
-"   <leader>g - Search current directory for occurences of given term and
-"   close window if no results
-"   <leader># - Search current directory for occurences of word under cursor
-nmap , :Denite buffer -split=floating -winrow=1<CR>
-nmap <leader>d :DeniteProjectDir file/rec -split=floating -winrow=1<CR>
-nnoremap <leader>g :<C-u>DeniteProjectDir grep:. -no-empty -mode=normal<CR>
-nnoremap <leader># :<C-u>DeniteCursorWord grep:. -mode=normal<CR>
-
-call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>', 'noremap')
-call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>', 'noremap')
-call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
-call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
-
 " === Nerdtree shorcuts === "
 "  <leader>n - Toggle NERDTree on/off
 "  <leader>nf - Opens current file location in NERDTree
@@ -451,6 +222,21 @@ autocmd Filetype gitcommit setlocal spell textwidth=72
 "Close preview window when completion is done.
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
+" ===========================================================================
+" ===                          TELESCOPE                                  ===
+" ===========================================================================
+
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+" Using Lua functions
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 
 " ===========================================================================
 " ===                          MISC                                       ===
@@ -465,3 +251,10 @@ cnoremap %% <C-R>=expand('%:h').'/'<cr>
 if exists('g:loaded_webdevicons')
   call webdevicons#refresh()
 endif
+
+" ===========================================================================
+" ===                          BACKUP                                     ===
+" ===========================================================================
+set backupdir=~/.cache/vim/backup//
+set directory=~/.cache/vim/swap//
+set undodir=~/.cache/vim/undo//
