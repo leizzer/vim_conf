@@ -1,6 +1,8 @@
 {
   "eslint.autoFixOnSave": true,
   "eslint.validate": [ "javascript", "javascriptreact", "html" ],
+	"eslint.format.enable": true,
+	"coc.preferences.formatOnSave": ["json", "js", "jsx", "html", "css", "markdown"],
 
 	"tsserver.enableJavascript" : true,
   "tsserver.npm": "/Users/recris/.config/nvm/14.4.0/bin/npm",
@@ -16,5 +18,6 @@
 			"initializationOptions": {},
 			"settings": {}
 		}
-	}
+  },
+  "snippets.ultisnips.pythonPrompt": false
 }

@@ -1,7 +1,7 @@
 " ===========================================================================
 " ===                          PLUGINS                                    ===
 " ===========================================================================
-language en_US.UTF8
+" language en_US.utf8
 
 call plug#begin('~/.local/share/nvim/plugged')
 
@@ -20,7 +20,7 @@ Plug 'tpope/vim-fugitive'
 
 " === Highlight ===
 Plug 'sheerun/vim-polyglot'
-
+"
 " === Ruby ===
 Plug 'tpope/vim-endwise'
 Plug 'ecomba/vim-ruby-refactoring'
@@ -38,23 +38,26 @@ Plug 'nvim-tree/nvim-web-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 " === Misc ===
-"" Plug 'racer-rust/vim-racer'
-Plug 'rafi/awesome-vim-colorschemes'
+Plug 'racer-rust/vim-racer'
 Plug 'mileszs/ack.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install()}}
 Plug 'shougo/echodoc.vim'
-
-" === UI
+"
+" === LSP
+"" NOTE: Install LSP
 Plug 'prabirshrestha/vim-lsp'
-
+"
 " === UI
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
-"" NOTE: Install LSP
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.4' }
+Plug 'folke/tokyonight.nvim'
+
+" === Copilot
+Plug 'github/copilot.vim'
 
 
 call plug#end()
@@ -124,7 +127,7 @@ endif
 
 "" Color
 set background=dark
-colorscheme onedark
+colorscheme tokyonight
 " Disable/Enable line numbers
 set number
 " Always show statusline
